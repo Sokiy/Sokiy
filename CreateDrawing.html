@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>createDiv</title>
+	<style>
+		#container {
+			width: 800px;
+			height: 600px;
+			border: 2px solid #b5cce8;
+			position: relative;
+			margin: 50px auto;
+			border-radius: 15px;
+		}
+		
+		p {
+			margin: 0;
+			padding: 0;
+		}
+		
+		#Lbox {
+			width: 200px;
+			height: 600px;
+			border-right: 2px solid #b5cce8;
+			border-bottom-left-radius: 15px;
+			border-top-left-radius: 15px;
+		}
+		
+		.box_1 {
+			width: 100%;
+			height: 100px;
+			border-bottom: 1px solid #b5cce8;
+		}
+		
+		.text {
+			width: 100%;
+			height: 30px;
+			text-align: center;
+			line-height: 30px;
+			font-size: 20px;
+			font-weight: bold;
+			background: rgba(190, 199, 237, 0.73);
+		}
+		
+		.btn {
+			width: 50px;
+			height: 30px;
+			float: left;
+			background: rgba(190, 199, 237, 0.73);
+			border-radius: 5px;
+			margin-top: 20px;
+			text-align: center;
+			line-height: 30px;
+			font-size: 16px;
+			margin-left: 10px;
+			cursor: pointer;
+		}
+		
+		#remove {
+			margin-left: 25px;
+			background: rgba(217, 144, 59, 0.73);
+		}
+		
+		.btn:hover {
+			background: rgba(190, 199, 237, 1);
+			margin-top: 18px;
+		}
+		
+		.tip {
+			text-indent: 20px;
+			height: 20px;
+			line-height: 20px;
+			font-weight: 600;
+			margin-top: 10px;
+		}
+		
+		.change {
+			width: 100%;
+			height: 30px;
+		}
+		
+		.box_2,
+		.box_3 {
+			width: 100%;
+			height: 165px;
+			border-bottom: 1px solid #b5cce8;
+		}
+		
+		.box_4 {
+			width: 100%;
+			height: 167px;
+			border-bottom-left-radius: 15px;
+		}
+		
+		.Ccolor {
+			width: 60px;
+			height: 60px;
+			margin-top: 35px;
+			margin-left: 65px;
+		}
+		
+		#Rbox {
+			width: 598px;
+			height: 600px;
+			position: absolute;
+			left: 202px;
+			top: 0;
+			border-bottom-right-radius: 15px;
+			border-top-right-radius: 15px;
+		}
+
+	</style>
+</head>
+
+<body>
+	<div id="container">
+		<div id="Lbox">
+			<div class="box_1">
+				<p class="text" style="border-top-left-radius:14px;">点击生成</p>
+				<div class="btn" id="Rectangular">矩形</div>
+				<div class="btn" id="circle">圆</div>
+				<div class="btn" id="remove">移除</div>
+			</div>
+			<div class="box_2">
+				<p class="text">调节大小</p>
+				<p class="tip">width: <span></span></p>
+				<input type="range" min="0" max="150" id="cw" class="change" value="0">
+				<p class="tip">height: <span></span></p>
+				<input type="range" min="0" max="150" id="ch" class="change" value="0">
+			</div>
+			<div class="box_3">
+				<p class="text">调节位置</p>
+				<p class="tip">X: <span></span></p>
+				<input type="range" min="0" max="500" id="cx" class="change" value="0">
+				<p class="tip">Y: <span></span></p>
+				<input type="range" min="-20" max="500" id="cy" class="change" value="0">
+
+			</div>
+			<div class="box_4">
+				<p class="text">调节颜色</p>
+				<input type="color" class="Ccolor" id='cc' />
+			</div>
+		</div>
+		<div id="Rbox"></div>
+	</div>
+</body>
+<script>
+	/*获取元素*/
+	function $(id) {
+		return document.getElementById(id);
+	}
+	var Rec = $('Rectangular');
+	var Cir = $('circle');
+	var Rem = $('remove');
+	var cw = $('cw');
+	var ch = $('ch');
+	var cx = $('cx');
+	var cy = $('cy');
+	var cc = $('cc');
+	var Rbox = $('Rbox');
+	var i = 0;
+	var aSpan = document.getElementsByTagName('span');
+	aSpan[0].innerHTML = cw.value + 'px';
+	aSpan[1].innerHTML = ch.value + 'px';
+	aSpan[2].innerHTML = 0 + 'px';
+	aSpan[3].innerHTML = 0 + 'px';
+
+	//颜色转换函数 给type=color赋值必须是十六进制的 
+	//-------------------------------------
+	//十六进制颜色值的正则表达式
+	var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
+	/*RGB颜色转换为16进制*/
+	String.prototype.colorHex = function() {
+		var that = this;
+		if (/^(rgb|RGB)/.test(that)) {
+			var aColor = that.replace(/(?:\(|\)|rgb|RGB)*/g, "").split(",");
+			var strHex = "#";
+			for (var i = 0; i < aColor.length; i++) {
+				var hex = Number(aColor[i]).toString(16);
+				if (hex === "0") {
+					hex += hex;
+				}
+				strHex += hex;
+			}
+			if (strHex.length !== 7) {
+				strHex = that;
+			}
+			return strHex;
+		} else if (reg.test(that)) {
+			var aNum = that.replace(/#/, "").split("");
+			if (aNum.length === 6) {
+				return that;
+			} else if (aNum.length === 3) {
+				var numHex = "#";
+				for (var i = 0; i < aNum.length; i += 1) {
+					numHex += (aNum[i] + aNum[i]);
+				}
+				return numHex;
+			}
+		} else {
+			return that;
+		}
+	};
+
+	// 矩形的变换函数
+	function changeFun(obj, objcalledval, cla, index) {
+		obj.style[cla] = parseInt(objcalledval) + 'px';
+		aSpan[index].innerHTML = parseInt(objcalledval) + 'px';
+	};
+	//删除节点
+	function remove(obj) {
+		if (Rbox.childNodes.length == 0) {
+         
+		} else {
+			Rbox.removeChild(obj);
+			cw.value = '0';
+			ch.value = '0';
+			cx.value = '0';
+			cy.value = '0';
+			aSpan[0].innerHTML = cw.value + 'px';
+			aSpan[1].innerHTML = ch.value + 'px';
+			aSpan[2].innerHTML = cx.value + 'px';
+			aSpan[3].innerHTML = cy.value + 'px';
+			cc.value = '#000000';
+		};
+	}
+	// 圆形的变换函数
+	function changeFunCir(obj, objcalledval, cla, index) {
+
+		if (index == 0 || index == 1) {
+			index = 0;
+			obj.style.borderRadius = (parseInt(objcalledval)) / 2 + 'px';
+			obj.style.width = obj.style.height = parseInt(objcalledval) + 'px';
+			aSpan[index].innerHTML = aSpan[index + 1].innerHTML = parseInt(objcalledval) + 'px';
+		} else {
+			aSpan[index].innerHTML = parseInt(objcalledval) + 'px';
+			obj.style[cla] = parseInt(objcalledval) + 'px';
+		}
+
+	}
+
+	// 矩形和圆形的重置函数
+	function reset(obj, num) {
+		cw.value = '50';
+		ch.value = '50';
+		cx.value = '0';
+		cy.value = '0';
+		cc.value = '#000000';
+		aSpan[0].innerHTML = cw.value + 'px';
+		aSpan[1].innerHTML = ch.value + 'px';
+		aSpan[2].innerHTML = cx.value + 'px';
+		aSpan[3].innerHTML = cy.value + 'px';
+		obj.style.position = 'absolute';
+		obj.style.left = cx.value + 'px';
+		obj.style.top = cy.value + 'px';
+		obj.style.backgroundColor = '#000000';
+		if (num == 1) {
+			obj.style.width = cw.value + 'px';
+			obj.style.height = ch.value + 'px';
+		} else {
+			obj.style.width = obj.style.height = cw.value + 'px';
+			obj.style.borderRadius = parseInt(cw.value) / 2 + 'px';
+		}
+
+	};
+	// 矩形点击生成函数
+	Rec.onclick = function() {
+		var box = document.createElement('div');
+		reset(box, 1);
+		Rbox.appendChild(box);
+
+		Rem.onclick = function() {
+			remove(box);
+		}
+		cw.oninput = function() {
+			changeFun(box, cw.value, 'width', 0);
+		};
+		ch.oninput = function() {
+			changeFun(box, ch.value, 'height', 1);
+		};
+		cx.oninput = function() {
+			changeFun(box, cx.value, 'left', 2);
+		};
+		cy.oninput = function() {
+			changeFun(box, cy.value, 'top', 3);
+		};
+		cc.oninput = function() {
+			box.style.background = this.value;
+		}
+
+		box.onclick = function() {
+			Rem.onclick = function() {
+				remove(box);
+			}
+			aSpan[0].innerHTML = this.clientWidth + 'px';
+			aSpan[1].innerHTML = this.clientHeight + 'px';
+			aSpan[2].innerHTML = this.offsetLeft + 'px';
+			aSpan[3].innerHTML = this.offsetTop + 'px';
+			cw.value = this.clientWidth;
+			ch.value = this.clientHeight;
+			cx.value = this.offsetLeft;
+			cy.value = this.offsetTop;
+			cc.value = this.style.backgroundColor.colorHex();
+
+
+
+			cw.oninput = function() {
+				changeFun(box, cw.value, 'width', 0);
+			};
+			ch.oninput = function() {
+				changeFun(box, ch.value, 'height', 1);
+			};
+			cx.oninput = function() {
+				changeFun(box, cx.value, 'left', 2);
+			};
+			cy.oninput = function() {
+				changeFun(box, cy.value, 'top', 3);
+			};
+			cc.oninput = function() {
+				box.style.background = this.value;
+			}
+
+		}
+	};
+	//不能用监听事件来获取range的值，当对象数量大于1时，range的值变换时，所有对象都会变化，所以直接为元素加上事件，后面的事件会挤掉前面的,WTF
+	/*	cw.addEventListener('input', function() {
+			box.style.width = this.value + 'px';
+			aSpan[0].innerHTML = this.value + 'px';
+		});
+		ch.addEventListener('input', function() {
+			box.style.height = this.value + 'px';
+			aSpan[1].innerHTML = this.value + 'px';
+		});
+		cx.addEventListener('input', function() {
+			box.style.left = this.value + 'px';
+			aSpan[2].innerHTML = this.value + 'px';
+		});
+		cy.addEventListener('input', function() {
+			box.style.top = this.value + 'px';
+			aSpan[3].innerHTML = this.value + 'px';
+		});
+		cc.addEventListener('input', function() {
+			box.style.background = this.value;
+		})
+
+	}*/
+
+
+
+	//圆形点击生成函数
+	Cir.onclick = function() {
+		var round = document.createElement('div');
+		reset(round, 0);
+
+		Rbox.appendChild(round);
+		Rem.onclick = function() {
+			remove(round);
+		};
+		cw.oninput = function() {
+			ch.value = this.value;
+			changeFunCir(round, cw.value, 'width', 0);
+		};
+		ch.oninput = function() {
+			cw.value = this.value;
+			changeFunCir(round, ch.value, 'height', 1);
+		};
+		cx.oninput = function() {
+			changeFunCir(round, cx.value, 'left', 2)
+		};
+		cy.oninput = function() {
+			changeFunCir(round, cy.value, 'top', 3)
+		};
+		cc.oninput = function() {
+			round.style.background = this.value;
+		};
+		round.onclick = function() {
+			Rem.onclick = function() {
+				remove(round);
+			};
+			aSpan[0].innerHTML = this.clientWidth + 'px';
+			aSpan[1].innerHTML = this.clientHeight + 'px';
+			aSpan[2].innerHTML = this.offsetLeft + 'px';
+			aSpan[3].innerHTML = this.offsetTop + 'px';
+			cw.value = this.clientWidth;
+			ch.value = this.clientHeight;
+			cx.value = this.offsetLeft;
+			cy.value = this.offsetTop;
+			cc.value = this.style.backgroundColor.colorHex();
+			cw.oninput = function() {
+				ch.value = this.value;
+				changeFunCir(round, cw.value, 'width', 0);
+			};
+			ch.oninput = function() {
+				cw.value = this.value;
+				changeFunCir(round, ch.value, 'height', 1);
+			};
+			cx.oninput = function() {
+				changeFunCir(round, cx.value, 'left', 2);
+			};
+			cy.oninput = function() {
+				changeFunCir(round, cy.value, 'top', 3);
+			};
+			cc.oninput = function() {
+				round.style.background = this.value;
+			}
+
+		}
+
+	}
+
+</script>
+
+</html>
