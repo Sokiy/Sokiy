@@ -1,2 +1,1 @@
-# Sokiy
-my code
+个人无聊时写的一些css或者js效果
