@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>banner</title>
+	<script src="sokiy.js"></script>
+	<style>
+		ul,
+		li {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		
+		a {
+			text-decoration: none;
+			margin: 0;
+			padding: 0;
+		}
+		
+		.show {
+			width: 500px;
+			height: 300px;
+			position: relative;
+			border: 1px solid #957ba3;
+			margin: 200px auto;
+			box-sizing: content-box;
+			overflow: hidden;
+		}
+		
+		.list {
+			height: 300px;
+			position: absolute;
+			left: 0;
+			top: 0;
+			left: -100%;
+		}
+		
+		.list>li {
+			display: inline-block;
+			width: 500px;
+			height: 300px;
+			float: left;
+		}
+		
+		li>img {
+			width: 500px;
+			height: 300px;
+		}
+		/*li:nth-child(1) { background: blue; } li:nth-child(2) { background: red; } li:nth-child(3) { background: yellow; }*/
+
+	</style>
+</head>
+
+<body>
+	<div class="show">
+		<ul class="list">
+			<li><img src="1.jpg" alt="1"></li>
+			<li><img src="2.jpg" alt="2"></li>
+			<li><img src="3.jpg" alt="3"></li>
+		</ul>
+	</div>
+	<button id="pre">pre</button>
+	<button id="next">next</button>
+</body>
+
+<script>
+	window.onload = function() {
+		var oUl = $('.list');
+		var aLi = oUl[0].children;
+		var btn = $('button');
+
+
+		(function getWidth() {
+			oUl[0].style.width = aLi.length * parseInt(getStyle(aLi[0], 'width')) + 'px';
+		})();
+
+
+		var timer = setInterval(function() {
+			oUl[0].appendChild(aLi[0]);
+			oUl[0].style.left = 0;
+			move(oUl[0], 'left', 10, -500);
+		}, 3000);
+
+		btn[0].onclick = function() {
+			clearInterval(timer);
+			oUl[0].style.left = -1000 + 'px';
+			move(oUl[0], 'left', 10, -500);
+			oUl[0].insertBefore(aLi[aLi.length - 1], aLi[0]);
+			timer = setInterval(function() {
+				oUl[0].appendChild(aLi[0]);
+				oUl[0].style.left = 0;
+				move(oUl[0], 'left', 10, -500);
+			}, 3000);
+		}
+
+
+		btn[1].onclick = function() {
+			clearInterval(timer);
+			oUl[0].appendChild(aLi[0]);
+			oUl[0].style.left = 0;
+			move(oUl[0], 'left', 10, -500);
+			timer = setInterval(function() {
+				oUl[0].appendChild(aLi[0]);
+				oUl[0].style.left = 0;
+				move(oUl[0], 'left', 10, -500);
+			}, 3000);
+
+
+		}
+
+
+	}
+
+</script>
+
+</html>
