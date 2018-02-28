@@ -11,3 +11,5 @@ function is32Bit(ch) {
 > promise对象和 deferred对象最重要的区别，promise对象相比于 deferred对象，缺少了 .resolve和 .reject这俩函数属性  
 > deferred对象返回的dtd对象可以在程序的任意地方去调用resolve或者reject函数,而返回的promise没有这两个属性,程序不会混乱
 
++ 回调地狱
+> 异步操作后,再次执行某些操作时候,需要依赖这次异步操作的结果,所以就需要把这次操作卸载异步操作的回调函数中,如果需要的操作有很多且都是依赖上一次操作的结果的话,则会造成各种嵌套
