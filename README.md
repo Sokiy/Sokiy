@@ -17,3 +17,5 @@ function is32Bit(ch) {
 
 
 ### SPA 过 jwt Token 登录认证 学习
+
+### nginx 接收监听的端口发过来的请求,一般是前端,然后代理到后端服务的端口, nice
