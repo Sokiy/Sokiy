@@ -22,4 +22,4 @@ function is32Bit(ch) {
 
 ### JWT 好多问题都没有解决啊 难受
 
-### server push  并不是 websocket 那种后端推送啊,只是可以推送为请求的静态资源,还是有问题啊
+### http/2 server push  并不是 websocket 那种后端推送啊,只是可以推送为请求的静态资源,还是有问题啊
