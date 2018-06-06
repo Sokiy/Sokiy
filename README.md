@@ -25,3 +25,5 @@ function is32Bit(ch) {
 ### http/2 server push  并不是 websocket 那种后端推送啊,只是可以推送为请求的静态资源,还是有问题啊
 
 ### Ry 写个 deno issue都能被喷,还 TM 中文居多, 不要去丢人了好嘛
+
+### 一个合格的技术 leader
