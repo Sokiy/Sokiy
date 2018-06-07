@@ -27,3 +27,5 @@ function is32Bit(ch) {
 ### Ry 写个 deno issue都能被喷,还 TM 中文居多, 不要去丢人了好嘛
 
 ### 一个合格的技术 leader
+
+### 协同工作不按规则做事的都是垃圾
