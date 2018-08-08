@@ -24,10 +24,4 @@ function is32Bit(ch) {
 
 ### http/2 server push  并不是 websocket 那种后端推送啊,只是可以推送为请求的静态资源,还是有问题啊
 
-### Ry 写个 deno issue都能被喷,还 TM 中文居多, 不要去丢人了好嘛
-
-### 协同工作不按规则做事的都是垃圾
-
-### 外包 shit 一样的代码
-
-### webpack 真滴棒
+### 还是有好多知识点串不起来啊
