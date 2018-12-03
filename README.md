@@ -27,3 +27,8 @@ function is32Bit(ch) {
 ### 还是有好多知识点串不起来啊
 
 ### 围绕着数据去设计代码 Everything is data
+
+
+## new skill
+> google 输入框 search 会自己把 google.com 的域名替换成对应地区的 ip,  
+> 所以可以通过修改默认引擎去解决 https://wwwgoogle.com/search?q=%s
