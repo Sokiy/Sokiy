@@ -32,3 +32,5 @@ function is32Bit(ch) {
 ## new skill
 > google 输入框 search 会自己把 google.com 的域名替换成对应地区的 ip,  
 > 所以可以通过修改默认引擎去解决 https://wwwgoogle.com/search?q=%s
+
+### npm 会捕获 npm script执行后的输出,如果执行后输出不是 unix 标准的输出 则会是一大堆的 npm ERR 
