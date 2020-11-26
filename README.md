@@ -16,21 +16,24 @@ function is32Bit(ch) {
 > 这样的代码不仅看起来很不舒服，可读性比较差,除此之外还有比较重要的一点就是对异常的捕获无法支持。
 
 
-### SPA 过 jwt Token 登录认证 学习
++ SPA 过 jwt Token 登录认证 学习
 
-### nginx 接收监听的端口发过来的请求,一般是前端,然后代理到后端服务的端口, nice
++ nginx 接收监听的端口发过来的请求,一般是前端,然后代理到后端服务的端口, nice
 
-### JWT 好多问题都没有解决啊 难受
++ JWT 好多问题都没有解决啊 难受
 
-### http/2 server push  并不是 websocket 那种后端推送啊,只是可以推送为请求的静态资源,还是有问题啊
++ http/2 server push  并不是 websocket 那种后端推送啊,只是可以推送为请求的静态资源,还是有问题啊
 
-### 还是有好多知识点串不起来啊
++ 还是有好多知识点串不起来啊
 
-### 围绕着数据去设计代码 Everything is data
++ 围绕着数据去设计代码 Everything is data
 
 
-## new skill
++ new skill
 > google 输入框 search 会自己把 google.com 的域名替换成对应地区的 ip,  
 > 所以可以通过修改默认引擎去解决 https://wwwgoogle.com/search?q=%s
 
-### npm 会捕获 npm script执行后的输出,如果执行后输出不是 unix 标准的输出 则会是一大堆的 npm ERR 
++ npm 会捕获 npm script执行后的输出,如果执行后输出不是 unix 标准的输出 则会是一大堆的 npm ERR 
+
+
++ 发现一个好网站 https://lmstfy.net/
